@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>About Us - ShopEase</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		.about-section {
+			padding: 60px 0;
+		}
+
+		.feature-box {
+			text-align: center;
+			padding: 30px;
+			border-radius: 12px;
+			transition: transform 0.3s;
+		}
+
+		.feature-box:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+		}
+
+		.feature-icon {
+			font-size: 48px;
+			margin-bottom: 20px;
+			color: #667eea;
+		}
+
+		.team-img {
+			width: 150px;
+			height: 150px;
+			border-radius: 50%;
+			object-fit: cover;
+			margin-bottom: 15px;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Navigation -->
+	<!--    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/"><i class="fas fa-store"></i> ShopEase</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/products/shop">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/cart"><i class="fas fa-shopping-cart"></i> Cart <span id="cartCount" class="badge bg-danger">0</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>-->
+	<!-- Navigation Bar -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<a class="navbar-brand" href="/">
+				<i class="fas fa-store"></i> ShopEase
+			</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="/products/shop">Shop</a></li>
+					<li class="nav-item"><a class="nav-link" href="/cart"><i class="fas fa-shopping-cart"></i> Cart
+							<span id="cartCount" class="badge bg-danger">0</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+					<li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+
+					<!-- Not logged in: Show Login & Register -->
+					<li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+					<li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" href="/register">Register</a>
+					</li>
+
+					<!-- Logged in: Show username & Logout -->
+					<li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+							data-bs-toggle="dropdown">
+							<i class="fas fa-user-circle"></i> <span sec:authentication="name"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="/orders/my-orders"><i class="fas fa-box"></i> My
+									Orders</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Hero Section -->
+	<section class="bg-primary text-white text-center py-5">
+		<div class="container">
+			<h1 class="display-4 fw-bold">About ShopEase</h1>
+			<p class="lead">Your One-Stop E-Commerce Destination</p>
+		</div>
+	</section>
+
+	<!-- Our Story -->
+	<section class="about-section">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-md-6">
+					<h2 class="mb-4">Our Story</h2>
+					<p class="lead">Founded in 2026, ShopEase started with a simple mission - to make online shopping
+						easy, secure, and enjoyable for everyone.</p>
+					<p>What began as a BCA final year project has grown into a fully functional e-commerce platform that
+						offers quality products across 6 categories. We believe in providing the best shopping
+						experience with competitive prices, fast delivery, and excellent customer support.</p>
+					<p>Today, ShopEase serves thousands of customers across India, and we're just getting started!</p>
+				</div>
+				<div class="col-md-6">
+					<img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500"
+						class="img-fluid rounded shadow" alt="Our Team">
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Mission & Vision -->
+	<section class="bg-light py-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="feature-box bg-white rounded shadow-sm h-100">
+						<i class="fas fa-bullseye feature-icon"></i>
+						<h3>Our Mission</h3>
+						<p>To provide a seamless, secure, and enjoyable online shopping experience with quality products
+							at competitive prices.</p>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="feature-box bg-white rounded shadow-sm h-100">
+						<i class="fas fa-eye feature-icon"></i>
+						<h3>Our Vision</h3>
+						<p>To become India's most trusted e-commerce platform, connecting millions of customers with
+							their desired products.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Why Choose Us -->
+	<section class="about-section">
+		<div class="container">
+			<h2 class="text-center mb-5">Why Choose ShopEase?</h2>
+			<div class="row">
+				<div class="col-md-3">
+					<div class="feature-box">
+						<i class="fas fa-truck feature-icon"></i>
+						<h5>Fast Delivery</h5>
+						<p>Free shipping on orders above ₹999</p>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="feature-box">
+						<i class="fas fa-shield-alt feature-icon"></i>
+						<h5>Secure Payments</h5>
+						<p>100% secure transactions</p>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="feature-box">
+						<i class="fas fa-headset feature-icon"></i>
+						<h5>24/7 Support</h5>
+						<p>Customer support always ready</p>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="feature-box">
+						<i class="fas fa-undo-alt feature-icon"></i>
+						<h5>Easy Returns</h5>
+						<p>7-day return policy</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer class="bg-dark text-white py-4">
+		<div class="container text-center">
+			<p>&copy; 2026 ShopEase. BCA Final Year Project by Avinash Tiwari</p>
+		</div>
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$.get("/cart/count", function (data) {
+				$("#cartCount").text(data);
+			});
+		});
+	</script>
+</body>
+
+</html>
