@@ -17,22 +17,30 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+//    @GetMapping("/shop")
+//    public String shop(
+//            @RequestParam(required = false) String category,
+//            @RequestParam(required = false) String search,
+//            @RequestParam(required = false) BigDecimal maxPrice,
+//            Model model) {
+//        
+//        List<Product> products = productService.filterProducts(category, search, maxPrice);
+//        model.addAttribute("products", products);
+//        model.addAttribute("selectedCategory", category);
+//        model.addAttribute("searchKeyword", search);
+//        
+//        // Get all categories for filter sidebar
+//        List<String> categories = List.of("Electronics", "Fashion", "Home & Living", "Health & Beauty", "Books & Education", "Sports & Fitness");
+//        model.addAttribute("categories", categories);
+//        
+//        return "shop";
+//    }
     @GetMapping("/shop")
-    public String shop(
-            @RequestParam(required = false) String category,
-            @RequestParam(required = false) String search,
-            @RequestParam(required = false) BigDecimal maxPrice,
-            Model model) {
-        
-        List<Product> products = productService.filterProducts(category, search, maxPrice);
+    public String shop(Model model) {
+        System.out.println("=== SHOP PAGE CALLED ===");
+        List<Product> products = productService.getAllProducts();
+        System.out.println("Products found: " + products.size());
         model.addAttribute("products", products);
-        model.addAttribute("selectedCategory", category);
-        model.addAttribute("searchKeyword", search);
-        
-        // Get all categories for filter sidebar
-        List<String> categories = List.of("Electronics", "Fashion", "Home & Living", "Health & Beauty", "Books & Education", "Sports & Fitness");
-        model.addAttribute("categories", categories);
-        
         return "shop";
     }
 
