@@ -60,7 +60,7 @@
                         <form th:action="@{/orders/place}" method="post">
                             <div class="mb-3">
                                 <label class="form-label">Full Name</label>
-                                <input type="text" class="form-control" th:value="${#authentication.principal.username}" disabled>
+                                <input type="text" class="form-control" required placeholder="Enter your name">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Address *</label>

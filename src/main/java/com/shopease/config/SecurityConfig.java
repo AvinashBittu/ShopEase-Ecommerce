@@ -34,11 +34,11 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth -> auth
                 // ✅ Public pages - sab dekh sakte hain bina login ke
-//                .requestMatchers("/", "/index", "/products/shop", "/products/**", 
-//                                 "/product/**", "/cart/**", "/cart/count",
-//                                 "/login", "/register", "/about", "/contact",
-//                                 "/css/**", "/js/**", "/images/**", "/static/**").permitAll()
-            		.requestMatchers("/**").permitAll()
+                .requestMatchers("/", "/index", "/products/shop", "/products/**", 
+                                 "/product/**", "/cart/**", "/cart/count",
+                                 "/login", "/register", "/about", "/contact",
+                                 "/css/**", "/js/**", "/images/**", "/static/**").permitAll()
+            		//.requestMatchers("/**").permitAll()
                 
                 // ✅ Checkout ke liye login chahiye
                 .requestMatchers("/orders/checkout", "/orders/place", "/orders/my-orders", 

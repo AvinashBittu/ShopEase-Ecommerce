@@ -14,49 +14,48 @@ import java.util.Optional;
 @RequestMapping("/products")
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
+	@Autowired
+	private ProductService productService;
+
+	@GetMapping("/shop")
+	public String shop(@RequestParam(required = false) String category, @RequestParam(required = false) String search,
+			@RequestParam(required = false) BigDecimal maxPrice, Model model) {
+
+		List<Product> products = productService.filterProducts(category, search, maxPrice);
+		model.addAttribute("products", products);
+		model.addAttribute("selectedCategory", category);
+		model.addAttribute("searchKeyword", search);
+
+		// Get all categories for filter sidebar
+		List<String> categories = List.of("Electronics", "Fashion", "Home & Living", "Health & Beauty",
+				"Books & Education", "Sports & Fitness");
+		model.addAttribute("categories", categories);
+
+		return "shop";
+	}
 
 //    @GetMapping("/shop")
-//    public String shop(
-//            @RequestParam(required = false) String category,
-//            @RequestParam(required = false) String search,
-//            @RequestParam(required = false) BigDecimal maxPrice,
-//            Model model) {
-//        
-//        List<Product> products = productService.filterProducts(category, search, maxPrice);
+//    public String shop(Model model) {
+//        System.out.println("=== SHOP PAGE CALLED ===");
+//        List<Product> products = productService.getAllProducts();
+//        System.out.println("Products found: " + products.size());
 //        model.addAttribute("products", products);
-//        model.addAttribute("selectedCategory", category);
-//        model.addAttribute("searchKeyword", search);
-//        
-//        // Get all categories for filter sidebar
-//        List<String> categories = List.of("Electronics", "Fashion", "Home & Living", "Health & Beauty", "Books & Education", "Sports & Fitness");
-//        model.addAttribute("categories", categories);
-//        
 //        return "shop";
 //    }
-    @GetMapping("/shop")
-    public String shop(Model model) {
-        System.out.println("=== SHOP PAGE CALLED ===");
-        List<Product> products = productService.getAllProducts();
-        System.out.println("Products found: " + products.size());
-        model.addAttribute("products", products);
-        return "shop";
-    }
 
-    @GetMapping("/{id}")
-    public String productDetail(@PathVariable Long id, Model model) {
-        Optional<Product> productOpt = productService.getById(id);
-        if (productOpt.isPresent()) {
-            model.addAttribute("product", productOpt.get());
-            
-            // Get related products (same category)
-            List<Product> relatedProducts = productService.getByCategory(productOpt.get().getCategory());
-            relatedProducts = relatedProducts.stream().filter(p -> !p.getId().equals(id)).limit(4).toList();
-            model.addAttribute("relatedProducts", relatedProducts);
-            
-            return "product-detail";
-        }
-        return "redirect:/products/shop";
-    }
+	@GetMapping("/{id}")
+	public String productDetail(@PathVariable Long id, Model model) {
+		Optional<Product> productOpt = productService.getById(id);
+		if (productOpt.isPresent()) {
+			model.addAttribute("product", productOpt.get());
+
+			// Get related products (same category)
+			List<Product> relatedProducts = productService.getByCategory(productOpt.get().getCategory());
+			relatedProducts = relatedProducts.stream().filter(p -> !p.getId().equals(id)).limit(4).toList();
+			model.addAttribute("relatedProducts", relatedProducts);
+
+			return "product-detail";
+		}
+		return "redirect:/products/shop";
+	}
 }
