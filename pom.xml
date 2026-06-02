@@ -87,10 +87,10 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- Thymeleaf Spring Security -->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
-		</dependency>
+		</dependency>-->
 	</dependencies>
 
 	<build>
