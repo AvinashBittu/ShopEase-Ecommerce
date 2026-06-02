@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${product.name} + ' - ShopEase'"></title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		.product-image {
+			width: 100%;
+			border-radius: 12px;
+		}
+
+		.quantity-input {
+			width: 80px;
+			text-align: center;
+		}
+
+		.stock-badge {
+			font-size: 0.9rem;
+		}
+
+		.rating {
+			color: #ffc107;
+			font-size: 1.2rem;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Navigation -->
+	<!--   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/"><i class="fas fa-store"></i> ShopEase</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/products/shop">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/cart"><i class="fas fa-shopping-cart"></i> Cart <span id="cartCount" class="badge bg-danger">0</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>-->
+	<!-- Navigation Bar -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<a class="navbar-brand" href="/">
+				<i class="fas fa-store"></i> ShopEase
+			</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="/products/shop">Shop</a></li>
+					<li class="nav-item"><a class="nav-link" href="/cart"><i class="fas fa-shopping-cart"></i> Cart
+							<span id="cartCount" class="badge bg-danger">0</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+					<li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+
+					<!-- Not logged in: Show Login & Register -->
+					<li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+					<li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" href="/register">Register</a>
+					</li>
+
+					<!-- Logged in: Show username & Logout -->
+					<li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+							data-bs-toggle="dropdown">
+							<i class="fas fa-user-circle"></i> <span sec:authentication="name"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="/orders/my-orders"><i class="fas fa-box"></i> My
+									Orders</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container my-5" th:if="${product != null}">
+		<div class="row">
+			<div class="col-md-5">
+				<img th:src="${product.imageUrl}" class="product-image" alt="Product Image">
+			</div>
+			<div class="col-md-7">
+				<h2 th:text="${product.name}"></h2>
+				<p class="text-muted">by <strong th:text="${product.brand}"></strong></p>
+
+				<div class="mb-2">
+					<span class="rating">★</span>
+					<span th:text="${product.rating}" class="fw-bold"></span>
+					<span class="text-muted">(<span th:text="${product.reviewCount}"></span> reviews)</span>
+				</div>
+
+				<div class="display-6 text-success mb-3">₹<span th:text="${product.price}"></span></div>
+
+				<div class="mb-3">
+					<span class="badge bg-success stock-badge" th:if="${product.stock > 10}">In Stock</span>
+					<span class="badge bg-warning stock-badge" th:if="${product.stock <= 10 and product.stock > 0}">Only
+						<span th:text="${product.stock}"></span> left!</span>
+					<span class="badge bg-danger stock-badge" th:if="${product.stock <= 0}">Out of Stock</span>
+				</div>
+
+				<div class="mb-4">
+					<h6>Description</h6>
+					<p th:text="${product.description}"></p>
+				</div>
+
+				<div class="row g-3">
+					<div class="col-auto">
+						<form th:action="@{/cart/add/{id}(id=${product.id})}" method="post" class="d-flex gap-2">
+							<input type="number" name="quantity" value="1" min="1" th:max="${product.stock}"
+								class="form-control quantity-input">
+							<button type="submit" class="btn btn-primary btn-lg" th:disabled="${product.stock <= 0}">
+								<i class="fas fa-cart-plus"></i> Add to Cart
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Related Products -->
+		<div class="mt-5" th:if="${not #lists.isEmpty(relatedProducts)}">
+			<h4 class="mb-3">You May Also Like</h4>
+			<div class="row">
+				<div class="col-md-3 col-sm-6 mb-3" th:each="related : ${relatedProducts}">
+					<div class="card h-100">
+						<img th:src="${related.imageUrl}" class="card-img-top"
+							style="height: 150px; object-fit: cover;">
+						<div class="card-body">
+							<h6 class="card-title" th:text="${related.name}"></h6>
+							<div class="text-primary">₹<span th:text="${related.price}"></span></div>
+							<a th:href="@{/products/{id}(id=${related.id})}"
+								class="btn btn-sm btn-outline-primary mt-2">View</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$.get("/cart/count", function (data) {
+				$("#cartCount").text(data);
+			});
+		});
+	</script>
+</body>
+
+</html>

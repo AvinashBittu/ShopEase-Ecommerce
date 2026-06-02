@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Contact Us - ShopEase</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		.contact-info {
+			text-align: center;
+			padding: 30px;
+			border-radius: 12px;
+			transition: transform 0.3s;
+			height: 100%;
+		}
+
+		.contact-info:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+		}
+
+		.contact-icon {
+			font-size: 48px;
+			color: #667eea;
+			margin-bottom: 20px;
+		}
+
+		.map-container {
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Navigation -->
+	<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<a class="navbar-brand" href="/"><i class="fas fa-store"></i> ShopEase</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="/products/shop">Shop</a></li>
+					<li class="nav-item"><a class="nav-link" href="/cart"><i class="fas fa-shopping-cart"></i> Cart
+							<span id="cartCount" class="badge bg-danger">0</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+					<li class="nav-item"><a class="nav-link active" href="/contact">Contact</a></li>
+					<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+					<li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>-->
+	<!-- Navigation Bar -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<a class="navbar-brand" href="/">
+				<i class="fas fa-store"></i> ShopEase
+			</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="/products/shop">Shop</a></li>
+					<li class="nav-item"><a class="nav-link" href="/cart"><i class="fas fa-shopping-cart"></i> Cart
+							<span id="cartCount" class="badge bg-danger">0</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+					<li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+
+					<!-- Not logged in: Show Login & Register -->
+					<li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+					<li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" href="/register">Register</a>
+					</li>
+
+					<!-- Logged in: Show username & Logout -->
+					<li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+							data-bs-toggle="dropdown">
+							<i class="fas fa-user-circle"></i> <span sec:authentication="name"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="/orders/my-orders"><i class="fas fa-box"></i> My
+									Orders</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Hero Section -->
+	<section class="bg-primary text-white text-center py-5">
+		<div class="container">
+			<h1 class="display-4 fw-bold">Contact Us</h1>
+			<p class="lead">We'd love to hear from you!</p>
+		</div>
+	</section>
+
+	<!-- Contact Section -->
+	<section class="py-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 mb-4">
+					<div class="contact-info bg-light">
+						<i class="fas fa-map-marker-alt contact-icon"></i>
+						<h5>Visit Us</h5>
+						<p class="mb-0">ShopEase Headquarters</p>
+						<p>MG Road, Mumbai - 400001</p>
+						<p>Maharashtra, India</p>
+					</div>
+				</div>
+				<div class="col-md-4 mb-4">
+					<div class="contact-info bg-light">
+						<i class="fas fa-phone contact-icon"></i>
+						<h5>Call Us</h5>
+						<p class="mb-0">Customer Support</p>
+						<p class="h4 text-primary">+91 1234567890</p>
+						<p>Mon-Sat: 10 AM - 7 PM</p>
+					</div>
+				</div>
+				<div class="col-md-4 mb-4">
+					<div class="contact-info bg-light">
+						<i class="fas fa-envelope contact-icon"></i>
+						<h5>Email Us</h5>
+						<p class="mb-0">For queries & support</p>
+						<p class="text-primary">support@shopease.com</p>
+						<p>Careers: careers@shopease.com</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Contact Form -->
+			<!--    <div class="row mt-5">
+                <div class="col-md-8 mx-auto">
+                    <div class="card shadow">
+                        <div class="card-body p-5">
+                            <h3 class="text-center mb-4">Send us a Message</h3>
+                            <form action="#" method="post">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Your Name</label>
+                                        <input type="text" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Email Address</label>
+                                        <input type="email" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Subject</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Message</label>
+                                    <textarea class="form-control" rows="5" required></textarea>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5">Send Message</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+			<!-- Contact Form -->
+			<div class="row mt-5">
+				<div class="col-md-8 mx-auto">
+					<div class="card shadow">
+						<div class="card-body p-5">
+							<h3 class="text-center mb-4">Send us a Message</h3>
+
+							<!-- ✅ YAHAN DAALO SUCCESS MESSAGE -->
+							<div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show"
+								role="alert">
+								<i class="fas fa-check-circle"></i> <span th:text="${successMessage}"></span>
+								<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+							</div>
+
+							<form method="post">
+								<div class="row">
+									<div class="col-md-6 mb-3">
+										<label class="form-label">Your Name</label>
+										<input type="text" name="name" class="form-control" required>
+									</div>
+									<div class="col-md-6 mb-3">
+										<label class="form-label">Email Address</label>
+										<input type="email" name="email" class="form-control" required>
+									</div>
+								</div>
+								<div class="mb-3">
+									<label class="form-label">Subject</label>
+									<input type="text" name="subject" class="form-control" required>
+								</div>
+								<div class="mb-3">
+									<label class="form-label">Message</label>
+									<textarea name="message" class="form-control" rows="5" required></textarea>
+								</div>
+								<div class="text-center">
+									<button type="submit" class="btn btn-primary btn-lg px-5">Send Message</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Map -->
+			<div class="row mt-5">
+				<div class="col-12">
+					<h3 class="text-center mb-4">Find Us Here</h3>
+					<div class="map-container">
+						<iframe
+							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.11609785008!2d72.74110110775968!3d19.082197839582747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1698765432100!5m2!1sen!2sin"
+							width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy">
+						</iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer class="bg-dark text-white py-4">
+		<div class="container text-center">
+			<p>&copy; 2026 ShopEase. BCA Final Year Project by Avinash Tiwari</p>
+		</div>
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$.get("/cart/count", function (data) {
+				$("#cartCount").text(data);
+			});
+		});
+	</script>
+</body>
+
+</html>
