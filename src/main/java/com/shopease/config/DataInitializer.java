@@ -317,8 +317,9 @@ public class DataInitializer implements CommandLineRunner {
                     new BigDecimal("1499"),
                     20,
                     "Sports & Fitness",
-                    "SS",
-                    "https://images.unsplash.com/photo-1540747913346-19212a4b5b4e?w=400&q=80",
+                    "MRF",
+//                    "https://images.unsplash.com/photo-1540747913346-19212a4b5b4e?w=400&q=80",
+                    "/images/cricket-bat.jpg",
                     4.4,
                     178,
                     true
