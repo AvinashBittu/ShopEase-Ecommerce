@@ -1,16 +1,20 @@
 package com.shopease.service;
 
-import com.shopease.entity.*;
-import com.shopease.repository.*;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.shopease.entity.Order;
+import com.shopease.entity.OrderItem;
+import com.shopease.entity.Product;
+import com.shopease.entity.User;
+import com.shopease.repository.OrderRepository;
+import com.shopease.repository.ProductRepository;
 
 @Service
 public class OrderService {
@@ -22,7 +26,7 @@ public class OrderService {
 	private ProductRepository productRepository;
 
 	@Transactional
-	public Order placeOrder(User user, Map<Long, Integer> cartItems, String address) {
+	public Order placeOrder(User user, Map<Long, Integer> cartItems, String address, String landmark, String deliveryInstructions, Double latitude, Double longitude) {
 		List<OrderItem> items = new ArrayList<>();
 		BigDecimal total = BigDecimal.ZERO;
 
@@ -32,6 +36,13 @@ public class OrderService {
 		order.setDeliveryAddress(address);
 		order.setStatus(Order.Status.PENDING);
 		order.setTotalAmount(BigDecimal.ZERO);
+		
+	    order.setLandmark(landmark);
+	    order.setDeliveryInstructions(deliveryInstructions);
+	    
+	    order.setLatitude(latitude);
+	    order.setLongitude(longitude);
+	    
 		order = orderRepository.save(order);
 
 		for (Map.Entry<Long, Integer> entry : cartItems.entrySet()) {
@@ -42,7 +53,6 @@ public class OrderService {
 			BigDecimal itemTotal = product.getPrice().multiply(BigDecimal.valueOf(qty));
 			total = total.add(itemTotal);
 
-			// Update stock
 			product.setStock(product.getStock() - qty);
 			productRepository.save(product);
 
@@ -80,5 +90,10 @@ public class OrderService {
 
 	public long getTotalOrders() {
 		return orderRepository.count();
+	}
+
+	@Transactional
+	public void updateOrder(Order order) {
+		orderRepository.save(order);
 	}
 }

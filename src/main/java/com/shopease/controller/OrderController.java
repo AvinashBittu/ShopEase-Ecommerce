@@ -37,17 +37,6 @@ public class OrderController {
 	@Autowired
 	private ProductService productService;
 
-//    @GetMapping("/checkout")
-//    public String checkout(HttpSession session, Model model) {
-//        @SuppressWarnings("unchecked")
-//        Map<Long, Integer> cart = (Map<Long, Integer>) session.getAttribute("cart");
-//        if (cart == null || cart.isEmpty()) {
-//            return "redirect:/cart";
-//        }
-//        model.addAttribute("cartSize", cart.size());
-//        return "checkout";
-//    }
-
 	@GetMapping("/checkout")
 	public String checkout(HttpSession session, Model model) {
 		@SuppressWarnings("unchecked")
@@ -56,7 +45,7 @@ public class OrderController {
 			return "redirect:/cart";
 		}
 
-		// ✅ Calculate total
+		
 		BigDecimal total = BigDecimal.ZERO;
 		for (Map.Entry<Long, Integer> entry : cart.entrySet()) {
 			Product product = productService.getById(entry.getKey()).orElse(null);
@@ -66,14 +55,16 @@ public class OrderController {
 		}
 
 		model.addAttribute("cartSize", cart.size());
-		model.addAttribute("total", total); // ✅ Yeh important hai!
+		model.addAttribute("total", total); 
 
 		return "checkout";
 	}
 
 	@PostMapping("/place")
-	public String placeOrder(@RequestParam String address, @AuthenticationPrincipal UserDetails userDetails,
-			HttpSession session) {
+	public String placeOrder(@RequestParam String address, @RequestParam(required = false) String landmark,
+			@RequestParam(required = false) String deliveryInstructions,
+			@RequestParam(required = false) Double latitude, @RequestParam(required = false) Double longitude,
+			@AuthenticationPrincipal UserDetails userDetails, HttpSession session) {
 		@SuppressWarnings("unchecked")
 		Map<Long, Integer> cart = (Map<Long, Integer>) session.getAttribute("cart");
 		if (cart == null || cart.isEmpty()) {
@@ -81,7 +72,7 @@ public class OrderController {
 		}
 
 		User user = userService.findByEmail(userDetails.getUsername()).orElseThrow();
-		Order order = orderService.placeOrder(user, cart, address);
+		Order order = orderService.placeOrder(user, cart, address, landmark, deliveryInstructions, latitude, longitude);
 
 		session.removeAttribute("cart");
 		return "redirect:/orders/confirmation/" + order.getId();

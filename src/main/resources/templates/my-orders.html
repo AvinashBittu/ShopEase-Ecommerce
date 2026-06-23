@@ -52,25 +52,6 @@
 </head>
 
 <body>
-	<!-- Navigation -->
-	<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<div class="container">
-			<a class="navbar-brand" href="/"><i class="fas fa-store"></i> ShopEase</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav ms-auto">
-					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="/products/shop">Shop</a></li>
-					<li class="nav-item"><a class="nav-link" href="/cart"><i class="fas fa-shopping-cart"></i> Cart
-							<span id="cartCount" class="badge bg-danger">0</span></a></li>
-					<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-					<li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>-->
 	<!-- Navigation Bar -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container">
@@ -157,6 +138,25 @@
 									<p class="mb-1"><strong>Delivery Address:</strong> <span
 											th:text="${order.deliveryAddress}"></span></p>
 								</div>
+							</div>
+							<!-- Location Details -->
+							<div class="row mb-2" th:if="${order.landmark != null or order.deliveryInstructions != null or order.latitude != null}">
+							    <div class="col-md-12">
+							        <p class="mb-1"><strong>📍 Location Details:</strong></p>
+							        <p class="mb-1" th:if="${order.landmark != null}">
+							            <span class="text-muted">Landmark:</span> <span th:text="${order.landmark}"></span>
+							        </p>
+							        <p class="mb-1" th:if="${order.deliveryInstructions != null}">
+							            <span class="text-muted">Instructions:</span> <span th:text="${order.deliveryInstructions}"></span>
+							        </p>
+							        <p class="mb-1" th:if="${order.latitude != null and order.longitude != null}">
+							            <span class="text-muted">Location:</span>
+							            <a th:href="'https://www.openstreetmap.org/?mlat=' + ${order.latitude} + '&mlon=' + ${order.longitude}"
+							               target="_blank" class="btn btn-sm btn-outline-primary">
+							               <i class="fas fa-map-marker-alt"></i> View on Map
+							            </a>
+							        </p>
+							    </div>
 							</div>
 							<hr>
 							<h6>Items:</h6>
