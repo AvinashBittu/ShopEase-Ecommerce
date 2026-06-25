@@ -115,6 +115,18 @@
 							    📍 <span id="locationAddress">Address fetched from map...</span>
 							</div>
 							<!-- End: OpenStreetMap Location -->
+							
+							
+							
+							   <div class="mb-3">
+							        <label class="form-label fw-bold">Payment Method</label>
+							        <select class="form-select" name="paymentMethod" required>
+							            <option value="COD">Cash on Delivery</option>
+							            <option value="ONLINE">Online Payment (Card/UPI)</option>
+							        </select>
+							    </div>
+
+							
 							<button type="submit" class="btn btn-success btn-lg w-100">Place Order</button>
 						</form>
 					</div>
@@ -130,13 +142,15 @@
 							<p class="mb-1">You have <strong th:text="${cartSize}"></strong> item(s) in your cart</p>
 						</div>
 						<hr>
-						<div class="d-flex justify-content-between">
+						<!--<div class="d-flex justify-content-between">
 							<span>Payment Method:</span>
 							<span><strong>Cash on Delivery</strong></span>
 						</div>
 						<div class="alert alert-info mt-3 small">
 							<i class="fas fa-info-circle"></i> You will pay cash when the product is delivered.
-						</div>
+						</div>-->
+						
+					
 					</div>
 				</div>
 			</div>
@@ -219,6 +233,7 @@
 	            });
 	    });
 	});
+	
 	</script>
 	
 </body>
