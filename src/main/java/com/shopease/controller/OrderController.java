@@ -124,7 +124,7 @@ public class OrderController {
 
 	            // Save order in database (pending payment)
 	            Order order = orderService.placeOrder(user, cart, address, landmark, deliveryInstructions, latitude, longitude);
-	            
+	            session.removeAttribute("cart");
 
 	            model.addAttribute("razorpayOrderId", razorpayOrderId);
 	            model.addAttribute("razorpayKey", razorpayKey);
