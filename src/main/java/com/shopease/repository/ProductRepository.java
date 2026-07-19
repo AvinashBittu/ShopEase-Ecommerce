@@ -17,11 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 	List<Product> findByCategoryOrderByPriceAsc(String category);
 
-//	@Query("SELECT p FROM Product p WHERE " + "(:category IS NULL OR p.category = :category) AND "
-//			+ "(:search IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(p.brand) LIKE LOWER(CONCAT('%', :search, '%'))) AND "
-//			+ "(:maxPrice IS NULL OR p.price <= :maxPrice)")
-//	List<Product> filterProducts(@Param("category") String category, @Param("search") String search,
-//			@Param("maxPrice") BigDecimal maxPrice);
 
 	@Query(value = "SELECT * FROM products p WHERE " + "(:category IS NULL OR p.category = :category) AND "
 			+ "(:search IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(p.brand) LIKE LOWER(CONCAT('%', :search, '%'))) AND "

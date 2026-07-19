@@ -28,7 +28,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // Create admin if not exists
+        
         if (!userRepository.existsByEmail("admin@shopease.com")) {
         	User admin = new User();
         	admin.setName("Admin User");
@@ -53,43 +53,9 @@ public class DataInitializer implements CommandLineRunner {
         	userRepository.save(user);
         }
 
-        // Seed products if empty
-//        if (productRepository.count() == 0) {
-//            List<Product> products = List.of(
-//                // Electronics
-//                Product.builder().name("iPhone 15 Pro").category("Electronics").brand("Apple").price(new BigDecimal("129999")).stock(15).rating(4.8).reviewCount(312).imageUrl("https://images.unsplash.com/photo-1695048133142-1a20484429be?w=400&q=80").description("Apple iPhone 15 Pro with A17 Pro chip, titanium design, and 48MP camera system.").featured(true).build(),
-//                Product.builder().name("Samsung Galaxy S24").category("Electronics").brand("Samsung").price(new BigDecimal("89999")).stock(20).rating(4.6).reviewCount(198).imageUrl("https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&q=80").description("Samsung Galaxy S24 with Snapdragon 8 Gen 3 and 50MP camera.").featured(true).build(),
-//                Product.builder().name("Sony WH-1000XM5 Headphones").category("Electronics").brand("Sony").price(new BigDecimal("29999")).stock(30).rating(4.9).reviewCount(542).imageUrl("https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=400&q=80").description("Industry-leading noise cancellation with 30-hour battery life.").featured(true).build(),
-//                Product.builder().name("Dell Inspiron 15 Laptop").category("Electronics").brand("Dell").price(new BigDecimal("65999")).stock(8).rating(4.4).reviewCount(87).imageUrl("https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&q=80").description("Intel Core i7, 16GB RAM, 512GB SSD, Windows 11.").featured(false).build(),
-//                Product.builder().name("Apple Watch Series 9").category("Electronics").brand("Apple").price(new BigDecimal("45999")).stock(12).rating(4.7).reviewCount(221).imageUrl("https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&q=80").description("Advanced health monitoring and crash detection.").featured(false).build(),
-//                Product.builder().name("Canon EOS R50 Camera").category("Electronics").brand("Canon").price(new BigDecimal("74999")).stock(5).rating(4.5).reviewCount(63).imageUrl("https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&q=80").description("24.2MP APS-C mirrorless camera with 4K video.").featured(false).build(),
-//                // Fashion
-//                Product.builder().name("Men's Denim Jacket").category("Fashion").brand("Levi's").price(new BigDecimal("1999")).stock(50).rating(4.3).reviewCount(134).imageUrl("https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=400&q=80").description("Classic denim jacket with modern slim fit.").featured(true).build(),
-//                Product.builder().name("Women's Floral Kurti").category("Fashion").brand("FabIndia").price(new BigDecimal("899")).stock(75).rating(4.5).reviewCount(287).imageUrl("https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&q=80").description("Beautiful floral print kurti for casual occasions.").featured(true).build(),
-//                Product.builder().name("Nike Air Max 270").category("Fashion").brand("Nike").price(new BigDecimal("12999")).stock(22).rating(4.6).reviewCount(456).imageUrl("https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80").description("Iconic Air Max cushioning for all-day comfort.").featured(false).build(),
-//                Product.builder().name("Women's Leather Handbag").category("Fashion").brand("Baggit").price(new BigDecimal("3499")).stock(18).rating(4.4).reviewCount(92).imageUrl("https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80").description("Premium PU leather handbag with multiple compartments.").featured(false).build(),
-//                // Home & Living
-//                Product.builder().name("Wooden Study Desk").category("Home & Living").brand("Nilkamal").price(new BigDecimal("8999")).stock(6).rating(4.5).reviewCount(78).imageUrl("https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=400&q=80").description("Solid wood study desk with storage drawers.").featured(true).build(),
-//                Product.builder().name("Instant Pot Pressure Cooker").category("Home & Living").brand("Instant Pot").price(new BigDecimal("6999")).stock(14).rating(4.8).reviewCount(512).imageUrl("https://images.unsplash.com/photo-1585515320310-259814833e62?w=400&q=80").description("7-in-1 multi-use programmable pressure cooker.").featured(true).build(),
-//                Product.builder().name("LED Fairy Lights 10m").category("Home & Living").brand("Syska").price(new BigDecimal("399")).stock(200).rating(4.4).reviewCount(423).imageUrl("https://images.unsplash.com/photo-1512389098783-66b81f86e199?w=400&q=80").description("Warm white LED string lights, USB powered.").featured(false).build(),
-//                // Health & Beauty
-//                Product.builder().name("Minimalist Niacinamide Serum").category("Health & Beauty").brand("Minimalist").price(new BigDecimal("599")).stock(80).rating(4.7).reviewCount(891).imageUrl("https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&q=80").description("10% Niacinamide + 1% Zinc serum for clear skin.").featured(true).build(),
-//                Product.builder().name("Whey Protein Chocolate 1kg").category("Health & Beauty").brand("MuscleBlaze").price(new BigDecimal("2499")).stock(25).rating(4.5).reviewCount(342).imageUrl("https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=400&q=80").description("25g protein per serving, chocolate flavour.").featured(true).build(),
-//                Product.builder().name("Yoga Mat Anti-Slip 6mm").category("Health & Beauty").brand("Boldfit").price(new BigDecimal("999")).stock(45).rating(4.6).reviewCount(234).imageUrl("https://images.unsplash.com/photo-1601925228278-23f85e58a168?w=400&q=80").description("Premium TPE anti-slip yoga mat, 183cm x 61cm.").featured(false).build(),
-//                // Books
-//                Product.builder().name("Let Us C by Yashavant Kanetkar").category("Books & Education").brand("BPB Publications").price(new BigDecimal("349")).stock(100).rating(4.8).reviewCount(1203).imageUrl("https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&q=80").description("Most popular C programming book. 17th Edition.").featured(true).build(),
-//                Product.builder().name("Atomic Habits by James Clear").category("Books & Education").brand("Random House").price(new BigDecimal("499")).stock(60).rating(4.9).reviewCount(2341).imageUrl("https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&q=80").description("An Easy & Proven Way to Build Good Habits.").featured(true).build(),
-//                // Sports
-//                Product.builder().name("Cricket Bat Kashmir Willow").category("Sports & Fitness").brand("SS").price(new BigDecimal("1499")).stock(20).rating(4.4).reviewCount(178).imageUrl("https://images.unsplash.com/photo-1540747913346-19212a4b5b4e?w=400&q=80").description("Full size Kashmir Willow bat. Weight 1.1-1.2kg.").featured(true).build(),
-//                Product.builder().name("Resistance Bands Set (5 pcs)").category("Sports & Fitness").brand("Boldfit").price(new BigDecimal("799")).stock(55).rating(4.6).reviewCount(312).imageUrl("https://images.unsplash.com/photo-1598289431512-b97b0917affc?w=400&q=80").description("Set of 5 resistance bands for home workouts.").featured(true).build()
-//            );
-//            productRepository.saveAll(products);
-//            System.out.println("✅ " + products.size() + " products seeded!");
-//        }
         if (productRepository.count() == 0) {
-        	//productRepository.deleteAll();
             List<Product> products = List.of(
-                // Electronics
+                
                 new Product(
                     "iPhone 15 Pro",
                     "Apple iPhone 15 Pro with A17 Pro chip, titanium design, and 48MP camera system.",

@@ -22,14 +22,12 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String home(Model model) {
-		// Get featured products - with null safety
 		List<Product> featuredProducts = productService.getFeatured();
 		if (featuredProducts == null) {
 			featuredProducts = new ArrayList<>();
 		}
 		model.addAttribute("featuredProducts", featuredProducts);
 
-		// Categories
 		List<Map<String, String>> categories = new ArrayList<>();
 		categories.add(Map.of("name", "Electronics", "icon", "mobile-alt"));
 		categories.add(Map.of("name", "Fashion", "icon", "tshirt"));
@@ -39,7 +37,6 @@ public class HomeController {
 		categories.add(Map.of("name", "Sports & Fitness", "icon", "futbol"));
 		model.addAttribute("categories", categories);
 
-		// Debug print
 		System.out.println("=== HomeController ===");
 		System.out.println("Featured products count: " + featuredProducts.size());
 		System.out.println("Categories count: " + categories.size());
@@ -51,11 +48,6 @@ public class HomeController {
 	public String login() {
 		return "login";
 	}
-
-//	@GetMapping("/register")
-//	public String register() {
-//		return "register";
-//	}
 
 	@GetMapping("/about")
 	public String about() {
@@ -70,7 +62,6 @@ public class HomeController {
 	@PostMapping("/contact")
 	public String submitContact(@RequestParam String name, @RequestParam String email, @RequestParam String subject,
 			@RequestParam String message, Model model) {
-		// Yahan tum email send kar sakte ho ya database mein save
 		System.out.println("Contact Form Submitted:");
 		System.out.println("Name: " + name);
 		System.out.println("Email: " + email);

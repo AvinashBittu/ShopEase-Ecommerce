@@ -95,7 +95,6 @@ public class OrderController {
 
 		User user = userService.findByEmail(userDetails.getUsername()).orElseThrow();
 		
-		   // Calculate total
 	    BigDecimal total = BigDecimal.ZERO;
 	    for (Map.Entry<Long, Integer> entry : cart.entrySet()) {
 	        Product product = productService.getById(entry.getKey()).orElse(null);
@@ -106,11 +105,9 @@ public class OrderController {
 	    
 	    System.out.println("Total Amount: " + total);
 	    
-	    // Online Payment
 	    if ("ONLINE".equals(paymentMethod)) {
 	    	System.out.println("=== ONLINE PAYMENT SELECTED ===");
 	        try {
-	            // Create Razorpay Order
 	            int amountInPaise = total.multiply(new BigDecimal("100")).intValue();
 	            JSONObject orderRequest = new JSONObject();
 	            orderRequest.put("amount", amountInPaise);
@@ -122,7 +119,6 @@ public class OrderController {
 	            
 	            System.out.println("Razorpay Order ID: " + razorpayOrderId);
 
-	            // Save order in database (pending payment)
 	            Order order = orderService.placeOrder(user, cart, address, landmark, deliveryInstructions, latitude, longitude);
 	            session.removeAttribute("cart");
 
@@ -140,7 +136,6 @@ public class OrderController {
 	    }
 	    
 	    
-	    // Cash on Delivery
 	    System.out.println("=== COD SELECTED ===");
 		Order order = orderService.placeOrder(user, cart, address, landmark, deliveryInstructions, latitude, longitude);
 
